@@ -6,13 +6,11 @@ server_addr = ('127.0.0.1', 8888)
 print('connecting to {} port {}'.format(server_addr[0], server_addr[1]))
 sock.connect(server_addr)
 
-msg = input('=>=> ')
+odd_data = "now is the time to fine all men."
+# encode into byte string to send to server
+sock.send(odd_data.encode())
 
-while msg != 'quit':
-
-    sock.send(msg.encode()) # encode into byte string to send to server
-    data = sock.recv(1024).decode() # decode the byte from server into string
-    print('from server: ' + data)
-    msg = input('=>=> ')
+data = sock.recv(1024).decode() # decode the byte from server into string
+print('from server: ' + data)
 
 sock.close()
