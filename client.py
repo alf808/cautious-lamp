@@ -6,17 +6,13 @@ server_addr = ('127.0.0.1', 8888)
 print('connecting to {} port {}'.format(server_addr[0], server_addr[1]))
 sock.connect(server_addr)
 
-try:
-    msg = b'repeating message'
-    print(f'sending {msg}')
-    sock.send(msg)
+msg = input('=>=> ')
 
-    received = 0
-    expected = len(msg)
+while msg != 'quit':
 
-    while received < expected:
-        data = sock.recv(4096)
-        received += len(data)
-        print(data)
-finally:
-    sock.close()
+    sock.send(msg.encode()) # encode into byte string to send to server
+    data = sock.recv(1024).decode() # decode the byte from server into string
+    print('from server: ' + data)
+    msg = input('=>=> ')
+
+sock.close()
